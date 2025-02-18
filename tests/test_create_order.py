@@ -18,7 +18,10 @@ class TestCreateOrder:
         response = service_create_order({'ingredients': [ingredient]}, {'auth_key': token})
         message = response.json()
 
-        assert response.status_code == 200 and message['order']['owner']
+        dict_order = message['order']
+
+        assert response.status_code == 200
+        assert ('owner' in dict_order.keys()) == True
 
 
     @allure.title('Создание заказа без авторизации')
@@ -29,7 +32,10 @@ class TestCreateOrder:
         response = service_create_order({'ingredients': [ingredient]}, {'auth_key': ''})
         message = response.json()
 
-        assert response.status_code == 200 and message['order']['owner']
+        dict_order = message['order']
+
+        assert response.status_code == 200
+        assert ('owner' in dict_order.keys()) == False
 
 
     @allure.title('Создание заказа без ингредиента')
@@ -43,7 +49,8 @@ class TestCreateOrder:
         response = service_create_order({'ingredients': []}, {'auth_key': token})
         message = response.json()
 
-        assert response.status_code == 400 and message['message'] == TestsMessages.NOT_INGREDIENT
+        assert response.status_code == 400
+        assert message['message'] == TestsMessages.NOT_INGREDIENT
 
 
     @allure.title('Создание заказа с невалидным хешем ингредиента')

@@ -20,7 +20,7 @@ class TestChangeDataUser:
                 UserProfileFields.EMAIL: generate_new_fields_for_service_change[f'{UserProfileFields.EMAIL}'],
                 UserProfileFields.NAME: generate_new_fields_for_service_change[f'{UserProfileFields.NAME}']}
         ,
-            {'auth_key': token},
+            {'auth_key': token}
         )
 
 
@@ -37,10 +37,11 @@ class TestChangeDataUser:
     def test_change_data_user_no_authorise(self, fixture_create_user):
         generate_new_fields_for_service_change = generate_fields_user(TestsUserData.LOGIN_AND_FIRSTNAME_FIELDS)
         response_user_data = service_change_user_data(
-            {'auth_key': ''},
             {
                 UserProfileFields.EMAIL: generate_new_fields_for_service_change[f'{UserProfileFields.EMAIL}'],
-                UserProfileFields.NAME: generate_new_fields_for_service_change[f'{UserProfileFields.NAME}']}
+                UserProfileFields.NAME: generate_new_fields_for_service_change[f'{UserProfileFields.NAME}']},
+            {'auth_key': ''}
+
         )
 
         message = response_user_data.json()
